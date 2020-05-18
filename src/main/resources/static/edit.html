@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>编辑文件</title>
+    <script src="js/jquery-3.4.1.min.js"></script>
+    <script src="js/const.js"></script>
+    <script src="js/function.js"></script>
+</head>
+<body onload="startEdit()">
+    <span>历史版本: </span>
+    <select style="height: 30px; width: 200px" id="historySelect"></select>
+    <button style="height: 30px;width: 300px" onclick="queryDraft()">查看文件草稿内容</button>
+    <span id="saveDraftHit" style="color: blue"></span>
+    <span id="editHit"></span>
+    </br></br>
+    <form id="new">
+        <textarea style="height: 500px; width: 500px" id="fileContent" name="fileContent"></textarea>
+        <textarea style="height: 500px; width: 500px" id="draft" name="fileContent"></textarea>
+        </br></br>
+    </form>
+    <button id="editBtn" style="height: 30px;width: 300px" onclick="editFile()">修改</button>
+</body>
+<script>
+    $('#historySelect').change(function () {
+        document.getElementById('draft').value = fileHistory[$('#historySelect').val()].fileContent;
+    });
+</script>
+</html>

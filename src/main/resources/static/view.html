@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>查看文件</title>
+    <script src="js/jquery-3.4.1.min.js"></script>
+    <script src="js/const.js"></script>
+</head>
+<body onload="start()">
+    <table width="600" border="1" cellspacing="0">
+        <thead>
+            <tr>
+                <td>序号</td>
+                <td>文件名称</td>
+                <td>创建时间</td>
+                <td>操作</td>
+            </tr>
+        </thead>
+        <tbody id="tbody">
+
+        </tbody>
+    </table>
+</body>
+<script>
+    function start() {
+        $.ajax({
+          url: httpUrl + 'queryAllFile',
+          dataType:'json',
+          type:'GET',
+          success: function (data) {
+            showData(data);
+          },
+          error: function (data) {
+
+          }
+        });
+    }
+
+    function showData(data) {
+        let index = 1;
+        const tbody = document.getElementById("tbody");
+        const list = data.data;
+        const url = 'http://localhost:8080/downloadFile/';
+        for (let i = 0; i < list.length; i++) {
+          const file = list[i];
+          const row = document.createElement('tr');
+          const indexTd = document.createElement("td");
+          indexTd.innerHTML = index++;
+          const fileNameTd = document.createElement("td");
+          fileNameTd.innerHTML = '<a href=' + url + file.fileName + '>' + file.fileName + '</a>';
+          const createTimeTd = document.createElement("td");
+          createTimeTd.innerHTML = file.createTime;
+          const operateTd = document.createElement("td");
+          operateTd.innerHTML = '<a href="edit.html?fileName=' + file.fileName + '">编辑</a>';
+          row.append(indexTd);
+          row.append(fileNameTd);
+          row.append(createTimeTd);
+          row.append(operateTd);
+          tbody.append(row);
+        }
+    }
+</script>
+</html>

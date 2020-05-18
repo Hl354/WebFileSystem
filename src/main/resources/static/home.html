@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>新增文件</title>
+    <script src="js/jquery-3.4.1.min.js"></script>
+    <script src="js/const.js"></script>
+</head>
+<body>
+    <form id="new">
+        <h3>文件名</h3>
+        <input style="height: 20px; width: 500px;" type="text" id="fileName" name="fileName">
+        <h3>文件内容</h3>
+        <textarea style="height: 500px; width: 500px" id="fileContent" name="fileContent"></textarea>
+        </br></br>
+    </form>
+    <button style="height: 30px;width: 300px" onclick="createNewFile()">创建</button>
+    <a href="view.html">查看所有文件列表</a>
+</body>
+<script>
+    function createNewFile() {
+        const fileName = document.getElementById("fileName").value;
+        const fileContent = document.getElementById("fileContent").value;
+        if (fileName.length == 0) {
+          alert('请输入文件名');
+          return;
+        }
+        if (fileContent.length == 0) {
+          alert('请输入文件内容');
+          return;
+        }
+        const data = {fileName: fileName, fileContent: fileContent};
+        $.ajax({
+          url: httpUrl + 'createNewFile',
+          dataType:'json',
+          type:'POST',
+          data: data,
+          success: function (data) {
+            alert(data.msg);
+          },
+          error: function (data) {
+
+          }
+        });
+    }
+</script>
+</html>
